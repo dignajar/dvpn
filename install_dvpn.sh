@@ -11,7 +11,7 @@ TMPFILE="/tmp/ncLinuxApp.jar"
 VPN_URL="$1"
 REALM="$2"
 
-if [[ -z "$1" && -z "$2" ]]
+if [[ -z "$1" || -z "$2" ]]
 then
 	echo "dVPN v$VERSION
 

@@ -76,7 +76,7 @@ then
 fi
 
 # --help argument
-if [ "$1" == "--help" ]
+if [[ "$1" == "--help" || "$1" == "-h" ]]
 then
 	echo "Version: $VERSION"
 	echo "Kernel: $KERNEL"
@@ -84,9 +84,17 @@ then
 fi
 
 # --certificate argument, this regenerate the certificate
-if [ "$1" == "--certificate" ]
+if [[ "$1" == "--certificate" || "$1" == "-c" ]]
 then
 	bash "$PATH_NETWORK/getx509certificate.sh" "$VPN_URL" "$PATH_NETWORK/certificate.ssl"
+	exit 0
+fi
+
+# --disconnect argument
+if [[ "$1" == "--disconnect" || "$1" == "-d" ]]
+then
+	echo "Disconnecting..."
+	/opt/network_connect/ncsvc -K
 	exit 0
 fi
 
@@ -95,6 +103,8 @@ read -p "Username: " USERNAME; echo
 stty -echo
 read -p "Passcode: " PIN; echo
 stty echo
+
+/opt/network_connect/ncsvc -K
 
 /opt/network_connect/ncsvc -h $VPN_URL -u $USERNAME -p $PIN -r $REALM -f $CERT_FILE -L 3&
 
@@ -114,8 +124,10 @@ done
 if [ $notConnected = true ]
 then
   echo "Connection failed."
-	echo "- Try to log-in on your web VPN portal. Example: $VPN_URL./.$REALM"
+	echo "- Try to login in WebVPN portal. Example: browse https://$VPN_URL/$REALM"
 	echo "- Check your credentials."
+	echo "- Check your internet connection and DNS."
+	echo "- Try to regenerate your certificate. Command: dvpn --certificate"
   echo ""
   echo "Note: Juniper Network Connect needs 32bits Libraries."
 fi

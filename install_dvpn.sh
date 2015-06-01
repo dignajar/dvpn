@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="dvpn"
-VERSION="1.1"
+VERSION="1.2"
 PATH_NETWORK="/opt/network_connect"
 OWNER=$(whoami)
 NCLINUX="https://github.com/dignajar/dvpn/raw/master/ncLinuxApp.jar"
@@ -11,6 +11,7 @@ TMPFILE="/tmp/ncLinuxApp.jar"
 VPN_URL="$1"
 REALM="$2"
 
+# Check arguments {vpn url} {vpn realm}
 if [[ -z "$1" || -z "$2" ]]
 then
 	echo "dVPN v$VERSION
@@ -21,6 +22,7 @@ Example: ./install_dvpn.sh vpn.domain.com Users"
 	exit 0
 fi
 
+# Download NcLinux
 type wget > /dev/null
 if [ $? -eq 0 ]
 then
@@ -29,6 +31,7 @@ else
 	curl "$NCLINUX" -o "$TMPFILE"
 fi
 
+# Checksum MD5
 MD5TMP=$(md5sum "$TMPFILE" | awk '{print $1}')
 if [ "$MD5TMP" != "$MD5SUM" ]
 then
@@ -36,6 +39,7 @@ then
 	exit 1
 fi
 
+# Installation
 sudo mkdir -p "$PATH_NETWORK"
 sudo chown -R $OWNER:$OWNER "$PATH_NETWORK"
 unzip -o "$TMPFILE" -d "$PATH_NETWORK/"
@@ -44,16 +48,25 @@ sudo chmod 6711 "$PATH_NETWORK/ncsvc"
 chmod 744 "$PATH_NETWORK/ncdiag"
 chmod 755 "$PATH_NETWORK/getx509certificate.sh"
 
+# Certificate
 bash "$PATH_NETWORK/getx509certificate.sh" "$VPN_URL" "$PATH_NETWORK/certificate.ssl"
 
+# Permissions
 sudo touch /bin/"$NAME"
 sudo chown $OWNER:$OWNER /bin/"$NAME"
 chmod 755 /bin/"$NAME"
 
+# Connection script
 echo '#!/bin/bash
 
 VERSION="'"$VERSION"'"
+PATH_NETWORK="'"$PATH_NETWORK"'"
+VPN_URL="'"$VPN_URL"'"
+REALM="'"$REALM"'"
+CERT_FILE=/opt/network_connect/certificate.ssl
 KERNEL=$(uname -ar)
+
+# Check kernel version
 uname -ar | grep -e "3.19.2\|3.19.1\|3.19.0"
 if [ $? -eq 0 ]
 then
@@ -62,18 +75,22 @@ then
   exit 1
 fi
 
-if [ "$1" == "-h" ]
+# --help argument
+if [ "$1" == "--help" ]
 then
 	echo "Version: $VERSION"
 	echo "Kernel: $KERNEL"
 	exit 0
 fi
 
-echo "dVPN v$VERSION"
+# --certificate argument, this regenerate the certificate
+if [ "$1" == "--certificate" ]
+then
+	bash "$PATH_NETWORK/getx509certificate.sh" "$VPN_URL" "$PATH_NETWORK/certificate.ssl"
+	exit 0
+fi
 
-VPN_URL="'"$VPN_URL"'"
-REALM="'"$REALM"'"
-CERT_FILE=/opt/network_connect/certificate.ssl
+echo "dVPN v$VERSION"
 read -p "Username: " USERNAME; echo
 stty -echo
 read -p "Passcode: " PIN; echo
@@ -97,7 +114,7 @@ done
 if [ $notConnected = true ]
 then
   echo "Connection failed."
-	echo "- Try to log-in on your web vpn portal."
+	echo "- Try to log-in on your web VPN portal. Example: $VPN_URL./.$REALM"
 	echo "- Check your credentials."
   echo ""
   echo "Note: Juniper Network Connect needs 32bits Libraries."

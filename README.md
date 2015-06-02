@@ -20,7 +20,7 @@ Note:
 4. ```$ chmod 755 install_dvpn.sh```
 5. ```$ ./install_dvpn.sh {url} {realm}```
 
-*Note: Ubuntu 15.04 by default came with Kernel 3.19.0, this version of kernel doesn't work with Juniper Network Connect, you need upgrade the kernel to v4.x (http://ubuntuhandbook.org/index.php/2015/04/upgrade-to-linux-kernel-4-0-in-ubuntu/).*
+*Note: Ubuntu 15.04 by default comes with Kernel 3.19.0, this version of kernel doesn't work with Juniper Network Connect, you need to upgrade the kernel to v4.x (http://ubuntuhandbook.org/index.php/2015/04/upgrade-to-linux-kernel-4-0-in-ubuntu/).*
 
 ### Usage
 

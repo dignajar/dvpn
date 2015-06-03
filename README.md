@@ -10,7 +10,7 @@ Juniper Network Connect client for GNU/Linux.
 
 Note:
 - The installer needs unzip and wget commands.
-- Juniper Network Connect software is 32bit you must have 32bit C runtime support libraries installed on your system.
+- Juniper Network Connect software is 32bit, you must have 32bit C runtime support libraries installed on your system.
 
 ### Installation on Ubuntu 14.04 LTS / 15.04
 
@@ -24,6 +24,14 @@ Note:
 
 ### Usage
 
+Connect
+
+```dvpn```
+
+Disconnect
+
+```dvpn --disconnect```
+
 Information about dVPN
 
 ```dvpn --help```
@@ -31,7 +39,3 @@ Information about dVPN
 Regenerate certificate
 
 ```dvpn --certification```
-
-Disconnect
-
-```dvpn --disconnect```

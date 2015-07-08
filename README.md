@@ -28,13 +28,16 @@ Connect
 
 ```dvpn```
 
+
 Disconnect
 
 ```dvpn --disconnect```
 
+
 Information about dVPN
 
 ```dvpn --help```
+
 
 Regenerate certificate
 

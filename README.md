@@ -34,4 +34,4 @@ Information about dVPN
 dvpn --help
 
 Regenerate certificate
-dvpn --certification
+dvpn --certificate

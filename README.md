@@ -25,13 +25,13 @@ Note:
 ### Usage
 
 Connect
-```dvpn```
+dvpn
 
 Disconnect
-```dvpn --disconnect```
+dvpn --disconnect
 
 Information about dVPN
-```dvpn --help```
+dvpn --help
 
 Regenerate certificate
-```dvpn --certification```
+dvpn --certification

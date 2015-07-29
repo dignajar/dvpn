@@ -67,7 +67,7 @@ CERT_FILE=/opt/network_connect/certificate.ssl
 KERNEL=$(uname -ar)
 
 # Check kernel version
-uname -ar | grep -e "3.19.2\|3.19.1\|3.19.0"
+uname -ar | grep -e "3.19.2\|3.19.1\|3.19.0\|3.13.0-59"
 if [ $? -eq 0 ]
 then
   echo "This version of Linux Kernel is not compatible with Juniper Network client."

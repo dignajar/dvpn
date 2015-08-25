@@ -4,21 +4,20 @@ Juniper Network Connect client for GNU/Linux.
 
 ### Installation
 
-- Download ```install_dvpn.sh```
+- Download the installer ```install_dvpn.sh```
 
 ```wget https://raw.githubusercontent.com/dignajar/dvpn/master/install_dvpn.sh```
 
 - Set execute permissions.
 
-
 ```chmod 755 install_dvpn.sh```
 
-- Install
+- Execute the installer with the correct parameters.
 
 ```./install_dvpn.sh {url} {realm}```
 
 Note:
-- The installer needs unzip and wget commands.
+- The installer needs to unzip and wget commands.
 - Juniper Network Connect software is 32bit, you must have 32bit C runtime support libraries installed on your system.
 
 ### Installation on Ubuntu 14.04 LTS / 15.04
@@ -33,14 +32,14 @@ Note:
 
 ### Usage
 
-Connect
+- Connect
 `dvpn`
 
-Disconnect
+- Disconnect
 `dvpn --disconnect`
 
-Information about dVPN
+- Information about dVPN
 `dvpn --help`
 
-Regenerate certificate
+- Regenerate certificate
 `dvpn --certificate`
